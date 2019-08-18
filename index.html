@@ -59,18 +59,33 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      const colors = {};
       $(() => {
         var socket = io();
         $("form").submit(function(e) {
           e.preventDefault(); // prevents page reloading
-          socket.emit("chat message", $("#m").val());
+          socket.emit("chat message", { msg: $("#m").val(), id: socket.id });
           $("#m").val("");
           return false;
         });
         socket.on("chat message", function(msg) {
-          $("#messages").append($("<li>").text(msg));
+          console.log(msg);
+          $("#messages").append(
+            $("<li>")
+              .text(msg.msg + (":" + msg.id).padStart(50))
+              .css({ color: getColor(msg.id) })
+          );
         });
       });
+      function getColor(id) {
+        if (colors[id]) {
+          return colors[id];
+        } else {
+          colors[id] = `#${rand1to255()}${rand1to255()}${rand1to255()}`;
+          return colors[id];
+        }
+      }
+      rand1to255 = () => Math.floor(Math.random() * 256).toString(16);
     </script>
   </body>
 </html>

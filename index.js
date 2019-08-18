@@ -4,7 +4,7 @@ var path = require("path");
 var io = require("socket.io")(http);
 
 /**************************************************
- *                     SOCKET                     *
+ *                    SOCKETS                     *
  **************************************************/
 
 io.on("connection", function(socket) {
@@ -24,7 +24,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "/index.html"));
 });
 
-const port = process.env.PORT;
-http.listen(port || 3000, function() {
+const port = process.env.PORT || 3000;
+http.listen(port, function() {
   console.log("listening on *:" + port);
 });
