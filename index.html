@@ -73,7 +73,10 @@
           $("#messages").append(
             $("<li>")
               .text(msg.msg + (":" + msg.id).padStart(50))
-              .css({ color: getColor(msg.id) })
+              .css({
+                color: getColor(msg.id),
+                "text-align": msg.id === socket.id ? "left" : "right"
+              })
           );
         });
       });
